@@ -108,6 +108,12 @@ include('includes/header.php');?>
               $name = $row_two['name'];
               $total_seats = $row_two['seats'];
               $booked_seats = $row_two['booked_seats'];
+              $seats_query = mysqli_query($con, "UPDATE trains SET booked_seats = booked_seats + 1 WHERE name = 'Deluxe City' ");
+              // if ($seats_query == TRUE){
+              //   echo "<script>alert('Updated')</script>";
+              // }else{
+              //   echo "<script>alert('Not Updated')</script>";
+              // }
 
               $ava=0;
               $ava= $total_seats - $booked_seats; 
@@ -125,14 +131,15 @@ include('includes/header.php');?>
     
 <?php
 						include ('db1.php');
-						$sql = "SELECT * FROM `booking_details` WHERE `account` = 'Deluxe Star' ";
+						$sql = "SELECT * FROM `trains` WHERE `name` = 'Deluxe Star' ";
 						$re = mysqli_query($con,$sql);
-						$droom = 0;
-                        $tava=0;
+						// $droom = 0;
+            //             $tava=0;
 						while($row=mysqli_fetch_array($re) )
 						{
-							$droom = $droom + 1;
-                            $tava=  $total_seats - $droom; 
+              $seats_query = mysqli_query($con, "UPDATE trains SET booked_seats = booked_seats + 1 WHERE name = 'Deluxe Star' ");
+							// $droom = $droom + 1;
+              //               $tava=  $total_seats - $droom; 
 
 						}
 	?>
