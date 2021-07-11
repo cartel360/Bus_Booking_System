@@ -126,6 +126,22 @@ while ($row = mysqli_fetch_array($query)) {
   $bus = $row['train_name'];
 
 ?>
+ <?php
+                  $result = mysqli_query($con, "SELECT * FROM trains WHERE id='$id'");
+                  while ($row = mysqli_fetch_array($result)) {
+                    $total_seats = $row['seats'];
+                    $booked_seats = $row['booked_seats'];
+                    $viti = $row['viti'];
+                    $bus =$row['name'];
+                    
+                    $seats_arr = preg_split("/\,/", $viti);
+
+                    $range = range(1,$total_seats);
+
+                    $newunselected = array_diff($range,$seats_arr); //Your new array you can foreach this
+
+                  
+                  ?>
 <body>
    <?php include('includes/header.php');?>
 <section class="user_profile inner_pages" style="margin-top:-8rem;">
@@ -178,7 +194,7 @@ while ($row = mysqli_fetch_array($query)) {
   <p>Enter traveling booking info</p>
 </div>
 
-<form class="ui form attached fluid loading segment" onsubmit="return contact(this)">
+<form class="ui form attached fluid loading segment" method="POST" action="#" onsubmit="return contact(this)" >
  <div class="field">
     <label>Destination</label>
     <input type="text" id="destination" value="<?php echo $departure; ?> to <?php echo $destination; ?>" readonly>
@@ -196,19 +212,39 @@ while ($row = mysqli_fetch_array($query)) {
 <div class="two fields"> 
 <div class="field"> 
     <label>Number of Seats</label>
-<input placeholder="Number of Seats" type="number" name="seats" id="seats" min="1" max="72"  value="1" required>
+<input placeholder="Number of Seats" type="number" name="booked_seats" id="seats" min="1" max="72"  value="1" required>
   </div> 
 <div class="field"> 
     <label>Date of Travel</label>
-<input type="date" id="traveldate" class="form-control" required min="<?php echo Date("Y-m-d") ?>" />
+<input type="text" id="traveldate" class="form-control" value="<?php echo $date; ?> <?php echo $ttime; ?>" readonly/>
   </div>  
   </div>
   <div style="text-align:center">
  <div><label>Ensure all details have been filled correctly</label></div>
-  <button class="ui green submit button">Submit Details</button>
+  <button class="ui green submit button" >Submit Details</button>
 </div> 
  </form>
 </div>
+<?php
+
+  include('db1.php');
+
+
+  if (isset($_POST['submit'])) {
+
+    
+    // Check connection
+    if (!$con) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $sql2 = mysqli_query($con, "UPDATE trains SET booked_seats = (booked_seats + 1) WHERE id = $train_id");
+    if (mysqli_query($con, $sql2)) {
+      //echo "<script type='text/javascript'> alert('You've added Train successfully')</script>"; 
+    }
+  }
+  mysqli_close($con);
+  ?>
 
 
 <div class="ui container text" id="contact-page" style="display:none">
@@ -253,10 +289,18 @@ while ($row = mysqli_fetch_array($query)) {
     <div class="header">Order Ref: <span style="color:red;font-size:15px"><?php echo $_SESSION['ORDERREF']?> <a href='index.php'>Cancel Order</a></span> </div> 
   <p>Enter Payment Details to Proceed</p>
 </div>
+ 
 
 <form class="ui form attached fluid loading segment" onsubmit="return confirmdetails(this)">
+<div class="field"> 
+<label>Confirm Amount(ksh)</label>
+
+ <select name="amount" id="amount">
+    <option value="" selected="selected" disabled>---See the Cost---</option>
+  </select>
+  </div>
  <div class="field"> 
-<label style="color:green; heaight:6rem; font-size:25px; font-weight:bold;">MPESA <span style="color:green; font-weight:bold; font-size: 20px;">+254 7126 38511</span></label>  
+<label style="color:green; heaight:6rem; font-size:25px; font-weight:bold;">MPESA <span style="color:green; font-weight:bold; font-size: 20px;"><span>via</span>Till NO. 5970127</span></label>  
 </div>
 
 <div class="field"> 
@@ -293,7 +337,9 @@ while ($row = mysqli_fetch_array($query)) {
 <div id="details"></div>
 <div class="ui horizontal divider">Confirm Details</div>
 <div class="ui fluid container center aligned">
-<a class="ui button green" onclick="senddata()" type="submit" name="sub">YES|Confirm</a>
+<a class="ui button green" onclick="senddata()" >YES|Confirm</a>
+
+           
 </div>
 </div>
 </div>
@@ -310,5 +356,6 @@ while ($row = mysqli_fetch_array($query)) {
 </body>
 </html>
 <?php
+}
 }
 ?>

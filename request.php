@@ -3,7 +3,8 @@ session_start();
 
 if($_POST){
 //beginning with collecting all
-$order=$_SESSION['ORDERREF'];    
+$order=$_SESSION['ORDERREF']; 
+//$id = $_REQUEST['eid'];   
 $destination=$_POST['d'];
 $travelclass=$_POST['tc'];
 $seats=$_POST['s'];
@@ -38,17 +39,26 @@ $message.=" One of the required fields was not provided, re-check inputs then tr
 $checkcode=mysqli_query($conn,"SELECT order_ref FROM booking_details WHERE order_ref='$order'");  
 if((!$checkcode) || (mysqli_num_rows($checkcode) >0)){    
 $message.="The Order Reference #$order Received belongs to another customer, Click <a href='index.php'>here</a> to generate another one. ";     
-}    
+}
 
+// $update=mysqli_query($conn,"UPDATE trains SET booked_seats=:(seats + 1) WHERE id = $order' ");  
+// if((!$update)) {    
+// $message.="Seats not updated / Not Added. ";     
+// }   
 
 	
 //ending
 if(empty($message)){
 $insertdata=mysqli_query($conn,"INSERT into booking_details (order_ref,fullname,EmailId,gender,class_reserved,destination,seats_reserved,date_reserved,transaction_id,account,amount) VALUES('$order','$fullname','$contact','$gender','$travelclass','$destination','$seats','$traveldate','$code','$paymethod','$amount')");    
-if($insertdata){$message="success";}else{$message="Could not post details or update transaction status!";}    
+if($insertdata){$message="success";  
+
+}else{$message="Could not post details or update transaction status!";}    
 }
   
 //finaly
 echo $message;    
 }
+?>
+<?php
+
 ?>
