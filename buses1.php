@@ -65,10 +65,7 @@ include('includes/header.php');?>
           <div class="my_vehicles_list">
             <ul class="vehicle_listing"> -->
 
-
-<!-- basic table  Start -->
-
-						<?php
+		<?php
 						include ('db1.php');
 
             if(isset($_POST["submit"])){
@@ -76,17 +73,106 @@ include('includes/header.php');?>
               $destination = $_REQUEST['route_two'];
               $date = $_REQUEST['date'];
             }
-						$sql = "SELECT * FROM routes WHERE departure = '$departure' AND destination = '$destination' AND  date = '$date'" ;
+						 $sql = "SELECT * FROM routes WHERE departure = '$departure' AND destination = '$destination' AND  date = '$date'" ;
 						$re = mysqli_query($con,$sql);
 
             $num_of_rows = mysqli_num_rows($re);
 
 						$c =0;
-            $rem =0;
+            $rem =0; 
             if ($num_of_rows <= 0){
               echo '<h3 class="text-center pt-5">No Available Bus on that Date <br>
-              <small><a href="bus.php" style="text-align:center">Reschedule your journey</a><small></h3>';
+              <small><a href="routes.php" style="text-align:center">Reschedule your journey</a><small></h3>';
+            	  $sql = "SELECT * FROM routes" ;
+						$re = mysqli_query($con,$sql);
+            $num_of_rows = mysqli_num_rows($re);
+
+						$c =0;
+            $rem =0;         
+              while($row=mysqli_fetch_array($re) )
+						   
+            {
+							// $c = $c + 1;
+
+              $train_id = $row['train_id'];
               
+              $departure = $row['departure'];
+              $destination = $row['destination'];
+              $fare = $row['price'];
+              $date = $row['date'];
+              $time = $row['time'];
+              
+             $query = mysqli_query($con, "SELECT * FROM trains WHERE id = '$train_id'");
+
+            while($row_two = mysqli_fetch_array($query)){
+              $name = $row_two['name'];
+              $total_seats = $row_two['seats'];
+              $booked_seats = $row_two['booked_seats'];
+
+              $ava=0;
+              $ava= $total_seats - $booked_seats
+
+            
+            ?>
+<section class="inner-page">
+      <div class="container">
+     
+					<table class="table">
+            <thead>
+              <tr>
+               
+                 <!-- <th scope="col">Bus</th> -->
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>               
+               
+                <th scope="col">Book Online</th>
+              </tr>
+            </thead>
+            <tbody>
+          
+            <?php
+            if($id % 2 ==1 )
+											{
+												echo"<tr class='gradeC'>
+                        <td>".$row['departure']."</td>
+                        <td>".$row['destination']."</td>
+                        <td>".$row['date']."</td>
+                        <td>".$row['time']."</td>
+                        
+                        <td><a href='booking1.php?eid=". $train_id . " <button class='get-started-btn scrollto' style='margin-left: 0rem;'> <i class='fa fa-edit' ></i> Book Now</button></td>
+            </tr>";
+                }
+											else
+											{
+                        echo"<tr class='gradeU'>
+                         <td>".$row['departure']."</td>
+                          
+                        <td>".$row['destination']."</td>
+                        <td>".$row['date']."</td>
+                        <td>".$row['time']."</td>
+                       
+                        <td><a href='booking1.php?eid=". $train_id . " <button class='get-started-btn scrollto' style='margin-left: 0rem;'> <i class='fa fa-edit' ></i> Book Now</button></td>
+            </tr>
+                        ";
+                      
+                      ?>
+ 
+             <?php
+             }
+             ?>
+            </tbody>
+          </table>
+
+</div>        </section>
+
+<?php }
+            }
+            
+?>
+            <?php
+            
             }else{             
             
 						while($row=mysqli_fetch_array($re) )
@@ -108,12 +194,7 @@ include('includes/header.php');?>
               $name = $row_two['name'];
               $total_seats = $row_two['seats'];
               $booked_seats = $row_two['booked_seats'];
-              // $seats_query = mysqli_query($con, "UPDATE trains SET booked_seats = booked_seats + 1 WHERE id = '$train_id' ");
-              // if ($seats_query == TRUE){
-              //   echo "<script>alert('Updated')</script>";
-              // }else{
-              //   echo "<script>alert('Not Updated')</script>";
-              // }
+
 
               $ava=0;
               $ava= $total_seats - $booked_seats; 
@@ -175,11 +256,12 @@ include('includes/header.php');?>
 </div>        </section>
         <?php
             }
-          }
-          }
          
+          }
         }
+      }
     
+
           ?>
 
 </section>

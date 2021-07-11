@@ -347,19 +347,15 @@
 </html>
 <?php
                                 	
-									include('db.php');
-							
-							
-							
-											
+									include('db.php');			
 							$servername = "localhost";
 							$username = "username";
 							$password = "";
-							$dbname = "western-train";
+							$dbname = "booking_db";
 							 if (isset($_POST['submit'])){
 							
 							// Create connection
-							$con = mysqli_connect("localhost","root","","western-train") or die(mysql_error());
+							$con = mysqli_connect("localhost","root","","booking_db") or die(mysql_error());
 							//$x = "SELECT * FROM addtrain WHERE seat";
 							
 							$y = "SELECT COUNT(*) FROM addtrain As booked";

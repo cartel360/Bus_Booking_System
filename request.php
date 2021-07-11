@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 if ($_POST) {
     //beginning with collecting all
     $order = $_SESSION['ORDERREF'];
@@ -57,3 +58,7 @@ if ($_POST) {
     //finaly
     echo $message;
 }
+
+
+?>
+
