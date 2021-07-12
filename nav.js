@@ -27,7 +27,7 @@ function billing() {
     $("#contact-page").hide();
     $("#billing-page").fadeIn("slow");
 
-    $("#payment-info").html("Confirm the payment of the High Class number of seats");
+    $("#payment-info").html("Confirm the payment and proceed");
     return false;
 
 

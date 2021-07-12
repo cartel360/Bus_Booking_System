@@ -213,7 +213,7 @@ generate_order();
   <p>Enter traveling booking info</p>
 </div>
 
-<form class="ui form attached fluid loading segment" onsubmit="return contact(this)">
+<form class="ui form attached fluid loading segment" action="#" method="POST" onsubmit="return contact(this)">
  
    <div class="field">
     <label>Destination</label>
@@ -231,12 +231,10 @@ generate_order();
 </div>
 
 <div class="two-fields"> 
-<div class="field">
+<div class="field"> 
     <label>Number of Seats</label>
-<input placeholder="Number of Seats" type="number" id="seats" min="1" max="72"  value="1" required>
-  
-  
-  </div>
+<input placeholder="Number of Seats" type="number" name="seats" id="seats" min="1" max="72"  value="1" required>
+  </div> 
 <div class="field"> 
     <label>Date of Travel</label>
 <input type="text" id="traveldate" class="form-control" value="<?php echo $date; ?> <?php echo $ttime; ?>" readonly/>
@@ -244,7 +242,7 @@ generate_order();
   </div>
   <div style="text-align:center">
  <div><label>Ensure all details have been filled correctly</label></div>
-  <button class="ui green submit button">Submit Details</button>
+  <button class="ui green submit button" type="submit" name="sub">Submit Details</button>
 </div> 
  </form>
 </div>
@@ -307,7 +305,7 @@ generate_order();
   </div>
  
     <div class="field"> 
-<label style="color:green; heaight:6rem; font-size:25px; font-weight:bold;">MPESA <span style="color:green; font-weight:bold; font-size: 20px;">+254 7126 38511</span></label>  
+<label style="color:green; heaight:6rem; font-size:25px; font-weight:bold;">MPESA <span style="color:green; font-weight:bold; font-size: 20px;"><span>via</span>Till NO. 5970127</span></label>  
 </div>
 
 <div class="field"> 
@@ -330,7 +328,7 @@ generate_order();
   <button class="ui green submit button">Proceed</button>
 </div>
  </form>
-<div class="ui bottom attached warning message"><i class="icon help"></i><b id="payment-info"></b></div> 
+<!-- <div class="ui bottom attached warning message"><i class="icon help"></i><b id="payment-info"></b></div>  -->
 </div>
 
 
@@ -343,7 +341,7 @@ generate_order();
 <div id="details"></div>
 <div class="ui horizontal divider">Confirm Details</div>
 <div class="ui fluid container center aligned">
-<a class="ui button green" onclick="senddata()" name="sub">YES|Confirm</a>
+<a class="ui button green" onclick="senddata()">YES|Confirm</a>
 </div>
 </div>
 </div>
@@ -387,3 +385,31 @@ generate_order();
 <?php }
 }
 ?>
+
+<?php
+
+  include('db.php');
+
+
+  if (isset($_POST['sub'])) {
+
+    $selected_seat = $_POST['selected_seat'];
+
+    // Create connection
+    $con = mysqli_connect("localhost", "root", "", "western-train");
+
+    // Check connection
+    if (!$con) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+
+
+    $sql3 = mysqli_query($con, "UPDATE trains SET viti = CONCAT_WS(' ', viti , $selected_seat) WHERE id = $train_id");
+    
+    if (mysqli_query($con, $sql3)) {
+      echo "<script type='text/javascript'> alert('You've added Train successfully')</script>"; 
+     
+    }
+  }
+  mysqli_close($con);
+  ?>

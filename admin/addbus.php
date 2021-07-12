@@ -98,7 +98,7 @@
                                                 
                                                
 												
-													<td><a href=delbus.php?eid=".$id ." <button class='btn btn-danger'> <i class='fa fa-edit' ></i> Remove</button></td>
+													<td><a href=deltrain.php?eid=".$id ." <button class='btn btn-danger'> <i class='fa fa-edit' ></i> Remove</button></td>
 												</tr>";
 											}
 											else
@@ -112,7 +112,7 @@
                                                 
                                                
 												
-												<td><a href=delbus.php?eid=".$id ." <button class='btn btn-danger'> <i class='fa fa-edit' ></i> Remove</button></td>
+												<td><a href=deltrain.php?eid=".$id ." <button class='btn btn-danger'> <i class='fa fa-edit' ></i> Remove</button></td>
 																										
 																							
 												

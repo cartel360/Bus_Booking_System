@@ -347,11 +347,7 @@
 </html>
 <?php
                                 	
-									include('db.php');
-							
-							
-							
-											
+									include('db.php');			
 							$servername = "localhost";
 							$username = "username";
 							$password = "";
