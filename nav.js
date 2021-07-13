@@ -50,10 +50,9 @@ function confirmdetails() {
     paymethod = $("#paymentmethod").val();
     //ticketname
     fullname = $("#fullname").val();
-    bus = $("#bus_id").val();
     //
 
-    $("#details").html("<ul><li>TICKET OWNER: " + fullname + "</li><li>DESTINATION: " + destination + "</li><li>DATE OF TRAVEL: " + traveldate + "</li><li>TRAVEL CLASS: " + travelclass + "</li><li>NUMBER OF SEATS: " + seats + "</li><li>AMOUNT PAYING: " + amount + " Via " + paymethod + " Transaction ID: " + code + "</li> <li>BUS: " + bus + "</li></ul>");
+    $("#details").html("<ul><li>TICKET OWNER: " + fullname + "</li><li>DESTINATION: " + destination + "</li><li>DATE OF TRAVEL: " + traveldate + "</li><li>TRAVEL CLASS: " + travelclass + "</li><li>NUMBER OF SEATS: " + seats + "</li><li>AMOUNT PAYING: " + amount + " Via " + paymethod + " Transaction ID: " + code + "</li></ul>");
 
     $("#confirmdetails-page").fadeIn("slow");
     return false;

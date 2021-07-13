@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-
 if ($_POST) {
     //beginning with collecting all
     $order = $_SESSION['ORDERREF'];
+    //$id = $_REQUEST['eid'];   
     $destination = $_POST['d'];
     $travelclass = $_POST['tc'];
     $seats = $_POST['s'];
@@ -42,6 +42,10 @@ if ($_POST) {
         $message .= "The Order Reference #$order Received belongs to another customer, Click <a href='index.php'>here</a> to generate another one. ";
     }
 
+    // $update=mysqli_query($conn,"UPDATE trains SET booked_seats=:(seats + 1) WHERE id = $order' ");  
+    // if((!$update)) {    
+    // $message.="Seats not updated / Not Added. ";     
+    // }   
 
 
     //ending
@@ -58,7 +62,7 @@ if ($_POST) {
     //finaly
     echo $message;
 }
-
+?>
+<?php
 
 ?>
-
